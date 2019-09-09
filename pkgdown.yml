@@ -1,0 +1,9 @@
+pandoc: '2.2'
+pkgdown: 1.4.0
+pkgdown_sha: ~
+articles:
+  problem-course-assignment: problem-course-assignment.html
+  problem-sudoku: problem-sudoku.html
+  problem-tsp: problem-tsp.html
+  problem-warehouse-location: problem-warehouse-location.html
+
