@@ -88,7 +88,7 @@
 <p><code>rmpk</code> is a lightweight package to model mixed integer linear programs. It is based on the API of the <a href="https://github.com/dirkschumacher/ompr">ompr</a> package and is also inspired by the architecture of <a href="https://github.com/JuliaOpt/JuMP.jl">Julia JuMP</a>.</p>
 <p>The goal is to provide a modelling package that can both be used in packages and also in interactive analyses. It also has a different architecture as the modelling layer modifies a central solver. That solver could be an interface to <a href="https://CRAN.R-project.org/package=ROI">ROI</a> or a shared pointer to a specific solver. Thus giving the option to directly communicate with the solver while still using an algebraic modelling framework.</p>
 <p>This is currently work in progress and experimental. I might merge it with <a href="https://github.com/dirkschumacher/ompr">ompr</a> but it could also become the successor of <a href="https://github.com/dirkschumacher/ompr">ompr</a> … not sure yet.</p>
-<p>Happy to receive feedback!</p>
+<p>Happy to receive feedback! Also your opinion on merging it with <code>ompr</code> and thus breaking old code or creating a new package.</p>
 <p><em>Still under development. Anything can change</em></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -96,25 +96,32 @@
 <p>You can install the released version of rlp from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"rmpk"</span>)</a></code></pre></div>
 </div>
-<div id="design-goals-and-todos" class="section level2">
+<div id="supported-types" class="section level2">
 <h2 class="hasAnchor">
-<a href="#design-goals-and-todos" class="anchor"></a>Design Goals and TODOS</h2>
+<a href="#supported-types" class="anchor"></a>Supported types</h2>
 <ul>
-<li>Almost as fast as matrix code</li>
-<li>Could be used in packages as well as in interactive analyses</li>
-<li>Fun to use</li>
-<li>Optimized for readability</li>
-<li>Support all features of <code>ompr</code>
+<li>Linear Programming (LP)</li>
+<li>Mixed Integer Linear Programming (MILP)</li>
+<li>Mixed Integer Quadratic Programming (MIQP)</li>
+<li>Mixed Integer Quadratically Constrained Programming (MIQCP)</li>
+</ul>
+</div>
+<div id="planned-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#planned-features" class="anchor"></a>(Planned) Features</h2>
+<ul>
+<li>✅Algebraic modelling of mixed integer porgramming problems</li>
+<li>✅Integer, binary and continious variables</li>
+<li>✅Linear and quadratic constraints/objective</li>
+<li>✅Bindings to most popular solvers through <a href="https://CRAN.R-project.org/package=ROI">ROI</a>
 </li>
-<li>Fix all issues with <code>ompr</code>
-</li>
-<li>Be able to directly pass values to the solver</li>
-<li>Lazy constraints / column generation should be possible</li>
-<li>Better set of solution statuses similiar to JuMP</li>
-<li>Get row and column duals of LPs</li>
-<li>initial solutions (not supported by ROI directly AFAIK)</li>
-<li>It optionally ships a ROI solver binding without any additional packages. So you can start right away.</li>
-<li>Maybe: quadratic programming</li>
+<li>✅ API that supports <code>magrittr</code> pipes</li>
+<li>✅ Support for character variable indexes</li>
+<li>🚧 Variable and constraint names</li>
+<li>🚧 Layconstraints through solver callbacks</li>
+<li>🚧 Supply initial feasible solutions</li>
+<li>🚧 Almost as fast as matrix code</li>
+<li>🚧 Access row/column duals of Linear Programs</li>
 <li>…</li>
 </ul>
 </div>
@@ -167,6 +174,15 @@
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h2>
 <p>MIT</p>
+</div>
+<div id="references-and-inspiration" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references-and-inspiration" class="anchor"></a>References and Inspiration</h2>
+<ul>
+<li>Dunning, Iain, Joey Huchette, and Miles Lubin. “JuMP: A modeling language for mathematical optimization.” SIAM Review 59.2 (2017): 295-320.</li>
+<li><a href="https://github.com/dirkschumacher/ompr">ompr</a></li>
+<li><a href="https://github.com/coin-or/pulp">pulp</a></li>
+</ul>
 </div>
 </div>
   </div>
