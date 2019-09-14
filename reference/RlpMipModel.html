@@ -6,7 +6,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • rmpk</title>
+<title>#' Add a variable to the model
+#'
+#' @param model the model
+#' @param expr an expression
+#' @param type a character, either continuous, integer or binary
+#' @param lb the lower bound
+#' @param ub the upper bound
+#' @param ... any quantifiers
+#'
+#' @export
+add_variable &lt;- function(model, expr, type = "continuous", lb = -Inf, ub = Inf, ...) 
+  rlang::eval_tidy(
+    rlang::quo(model$add_variable(!!rlang::enquo(expr), !!type, !!lb, !!ub, ...))
+  )
+  model — RlpMipModel • rmpk</title>
 
 
 <!-- jquery -->
@@ -35,7 +49,34 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="#' Add a variable to the model
+#'
+#' @param model the model
+#' @param expr an expression
+#' @param type a character, either continuous, integer or binary
+#' @param lb the lower bound
+#' @param ub the upper bound
+#' @param ... any quantifiers
+#'
+#' @export
+add_variable &lt;- function(model, expr, type = "continuous", lb = -Inf, ub = Inf, ...) 
+  rlang::eval_tidy(
+    rlang::quo(model$add_variable(!!rlang::enquo(expr), !!type, !!lb, !!ub, ...))
+  )
+  model — RlpMipModel" />
+<meta property="og:description" content="#' Set the objective of the model
+#'
+#' @param model the model
+#' @param expr an expression
+#' @param sense either max or min
+#'
+#' @export
+set_objective &amp;lt;- function(model, expr, sense = &quot;min&quot;) 
+  rlang::eval_tidy(
+    rlang::quo(model$set_objective(!!rlang::enquo(expr), !!sense))
+  )
+  model" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +95,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,50 +161,9 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
-    </div>
-
-    <table class="ref-index">
-
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="MIPModel.html">MIPModel()</a></code> </p>
-        </td>
-        <td><p>A new MILP Model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="RMPSolverInterface.html">RMPSolverInterface</a></code> </p>
-        </td>
-        <td><p>An interface R6 class for a solver</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ROI_solver.html">ROI_solver()</a></code> </p>
-        </td>
-        <td><p>A ROI solver</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="RlpMipModel.html">RlpMipModel</a></code> </p>
-        </td>
-        <td><p>#' Add a variable to the model
+    <h1>#' Add a variable to the model
 #'
 #' @param model the model
 #' @param expr an expression
@@ -177,23 +177,69 @@ add_variable &lt;- function(model, expr, type = "continuous", lb = -Inf, ub = In
   rlang::eval_tidy(
     rlang::quo(model$add_variable(!!rlang::enquo(expr), !!type, !!lb, !!ub, ...))
   )
-  model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TERMINATION_STATUS.html">TERMINATION_STATUS</a></code> </p>
-        </td>
-        <td><p>Solver termination status codes</p></td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
+  model</h1>
+    
+    <div class="hidden name"><code>RlpMipModel.Rd</code></div>
+    </div>
 
+    <div class="ref-description">
+    <p>#' Set the objective of the model
+#'
+#' @param model the model
+#' @param expr an expression
+#' @param sense either max or min
+#'
+#' @export
+set_objective &lt;- function(model, expr, sense = "min") 
+  rlang::eval_tidy(
+    rlang::quo(model$set_objective(!!rlang::enquo(expr), !!sense))
+  )
+  model</p>
+    </div>
+
+    <pre class="usage"><span class='no'>RlpMipModel</span></pre>
+
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>#' Add a constraint to the model
+#'
+#' @param model the model
+#' @param expr an expression
+#' @param ... any quantifiers
+#'
+#' @export
+add_constraint &lt;- function(model, expr, ...) 
+  rlang::eval_tidy(
+    rlang::quo(model$add_constraint(!!rlang::enquo(expr), ...))
+  )
+  model</p>
+<p>#' Set bounds of individual variables
+#'
+#' @param model the model
+#' @param expr an expression
+#' @param lb the lower bounds
+#' @param ub the upper bounds
+#' @param ... any quantifiers
+#'
+#' @export
+set_bounds &lt;- function(model, expr, lb = NULL, ub = NULL, ...) 
+  rlang::eval_tidy(
+    rlang::quo(model$set_bounds(!!rlang::enquo(expr), !!lb, !!ub, ...))
+  )
+  model</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#details">Details</a></li>
     </ul>
+
   </div>
 </div>
 
