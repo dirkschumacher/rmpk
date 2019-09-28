@@ -148,16 +148,16 @@
 <a class="sourceLine" id="cb8-8" data-line-number="8">model<span class="op">$</span><span class="kw">add_variable</span>(u[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">lb =</span> <span class="dv">1</span>, <span class="dt">ub =</span> n)</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># minimize travel distance</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="kw">sum_expr</span>(distance[i, j] <span class="op">*</span><span class="st"> </span>x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n), <span class="st">"min"</span>)</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(distance[i, j] <span class="op">*</span><span class="st"> </span>x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n), <span class="st">"min"</span>)</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co"># you cannot go to the same city</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">model<span class="op">$</span><span class="kw">set_bounds</span>(x[i, i], <span class="dt">ub =</span> <span class="dv">0</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co"># leave each city</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw">sum_expr</span>(x[i, j], <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(x[i, j], <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
 <a class="sourceLine" id="cb8-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co"># visit each city</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw">sum_expr</span>(x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
 <a class="sourceLine" id="cb8-21" data-line-number="21"></a>
 <a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co"># ensure no subtours (arc constraints)</span></a>
 <a class="sourceLine" id="cb8-23" data-line-number="23">model<span class="op">$</span><span class="kw">add_constraint</span>(u[i] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">i =</span> <span class="dv">2</span><span class="op">:</span>n)</a>
@@ -289,7 +289,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

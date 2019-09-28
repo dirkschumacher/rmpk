@@ -161,29 +161,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="RlpMipModel.html">RlpMipModel</a></code> </p>
-        </td>
-        <td><p>#' Add a variable to the model
-#'
-#' @param model the model
-#' @param expr an expression
-#' @param type a character, either continuous, integer or binary
-#' @param lb the lower bound
-#' @param ub the upper bound
-#' @param ... any quantifiers
-#'
-#' @export
-add_variable &lt;- function(model, expr, type = "continuous", lb = -Inf, ub = Inf, ...) 
-  rlang::eval_tidy(
-    rlang::quo(model$add_variable(!!rlang::enquo(expr), !!type, !!lb, !!ub, ...))
-  )
-  model</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="TERMINATION_STATUS.html">TERMINATION_STATUS</a></code> </p>
         </td>
         <td><p>Solver termination status codes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sum_expr.html">sum_expr()</a></code> </p>
+        </td>
+        <td><p>Helper function to sum over a set of indexes</p></td>
       </tr>
     </tbody>
     </table>
@@ -204,7 +190,7 @@ add_variable &lt;- function(model, expr, type = "continuous", lb = -Inf, ub = In
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

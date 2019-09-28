@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Solver termination status codes — TERMINATION_STATUS • rmpk</title>
+<title>Helper function to sum over a set of indexes — sum_expr • rmpk</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Solver termination status codes — TERMINATION_STATUS" />
-<meta property="og:description" content="Solver termination status codes" />
+<meta property="og:title" content="Helper function to sum over a set of indexes — sum_expr" />
+<meta property="og:description" content="Helper function to sum over a set of indexes" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,27 +124,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Solver termination status codes</h1>
+    <h1>Helper function to sum over a set of indexes</h1>
     
-    <div class="hidden name"><code>TERMINATION_STATUS.Rd</code></div>
+    <div class="hidden name"><code>sum_expr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Solver termination status codes</p>
+    <p>Helper function to sum over a set of indexes</p>
     </div>
 
-    <pre class="usage"><span class='no'>TERMINATION_STATUS</span></pre>
+    <pre class="usage"><span class='fu'>sum_expr</span>(<span class='no'>expr</span>, <span class='no'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>expr</th>
+      <td><p>A numeric, linear or quadratic expression</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>a number named indexes</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>environment</code> of length 7.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#format">Format</a></li>
+      <li><a href="#arguments">Arguments</a></li>
     </ul>
 
   </div>
