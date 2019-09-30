@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Traveling Salesman Problem • rmpk</title>
+<title>Traveling Salesperson Problem using Subtour Elimination Constraints • rmpk</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="The Traveling Salesman Problem">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Traveling Salesperson Problem using Subtour Elimination Constraints">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -87,13 +87,11 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>The Traveling Salesman Problem</h1>
-                        <h4 class="author">Dirk Schumacher</h4>
+      <h1>Traveling Salesperson Problem using Subtour Elimination Constraints</h1>
             
-            <h4 class="date">September 2019</h4>
       
       
-      <div class="hidden name"><code>problem-tsp.Rmd</code></div>
+      <div class="hidden name"><code>tsp-subtour.Rmd</code></div>
 
     </div>
 
@@ -102,7 +100,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>This vignette decribes how to solve a TSP using <code>rmpk</code>.</p>
+<p>This vignette decribes how to solve a TSP using <code>rmpk</code> and subtour elimination constraints using solver callbacks.</p>
 <p><a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Wikipedia</a> gives the following definition:</p>
 <blockquote>
 <p>The travelling salesman problem (TSP) asks the following question: Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?</p>
@@ -116,20 +114,20 @@
 <a href="#setting" class="anchor"></a>Setting</h2>
 <p>First let us import some librarys</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(knitr)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr))</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a></code></pre></div>
 <p>The number of cities:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">26</span></a></code></pre></div>
 <p>Boundary of our Euclidean space:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># from 0 to ...</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">max_x &lt;-<span class="st"> </span><span class="dv">500</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">max_y &lt;-<span class="st"> </span><span class="dv">500</span></a></code></pre></div>
 <p>Some random cities:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">123456</span>)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">42</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">cities &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(n, <span class="dt">max =</span> max_x), <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(n, <span class="dt">max =</span> max_y))</a></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cities, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, y)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>()</a></code></pre></div>
-<p><img src="problem-tsp_files/figure-html/unnamed-chunk-5-1.png" width="700" style="display: block; margin: auto;"></p>
+<p><img src="tsp-subtour_files/figure-html/unnamed-chunk-6-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>Now the distance matrix</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">distance &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(cities, x, y), <span class="dt">diag =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 </div>
@@ -138,17 +136,17 @@
 <a href="#model-formulation" class="anchor"></a>Model formulation</h2>
 <p>There are essential two prominent ways to model a TSP as a MILP. One is to formulate the full model using the Miller–Tucker–Zemlin (MTZ) formulation and the other option is to use the so-called sub-tour elimination constraints .<a href="https://www.unc.edu/~pataki/papers/teachtsp.pdf">1</a></p>
 <p>The first formulation is fairly compact (quadratic many constraints and variables) but is not suitable anymore when n gets larger. The second formulation has exponential many constraints at most, but can solve larger TSPs due to the better LP relaxation. The idea of the latter approach is add constraints to the model <em>during</em> the solution process as soon as a solution was found that contains a sub-tour. For solution strategies like this solvers usually offer callbacks that let’s you modify the model during the the branch-and-cut process.</p>
-<p>Therefor we will use the MTZ formulation and solve a fairly small TSP.</p>
+<p>In this article we implement the model shown in the TSP <a href="http://examples.gurobi.com/traveling-salesman-problem/">Gurobi Example</a>, but instead of Gurobi we will use GLPK to solve it.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rmpk)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ROI.plugin.glpk)</a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/MIPModel.html">MIPModel</a></span>(<span class="kw"><a href="../reference/ROI_solver.html">ROI_solver</a></span>(<span class="st">"glpk"</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># we create a variable that is 1 iff we travel from city i to j</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">model<span class="op">$</span><span class="kw">add_variable</span>(x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n, </a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">             <span class="dt">type =</span> <span class="st">"integer"</span>, <span class="dt">lb =</span> <span class="dv">0</span>, <span class="dt">ub =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># a helper variable for the MTZ formulation of the tsp</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">model<span class="op">$</span><span class="kw">add_variable</span>(u[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">lb =</span> <span class="dv">1</span>, <span class="dt">ub =</span> n)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rmpk.glpk)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">solver &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rmpk.glpk/man/GLPK.html">GLPK</a></span>()</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/MIPModel.html">MIPModel</a></span>(solver)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># we create a variable that is 1 iff we travel from city i to j</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># filter guards are not yet supported so we generate all possible combinations</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># although the graph is undirected</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">model<span class="op">$</span><span class="kw">add_variable</span>(x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n, </a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">                   <span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">lb =</span> <span class="dv">0</span>, <span class="dt">ub =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># minimize travel distance</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(distance[i, j] <span class="op">*</span><span class="st"> </span>x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n), <span class="st">"min"</span>)</a>
@@ -156,25 +154,68 @@
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co"># you cannot go to the same city</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">model<span class="op">$</span><span class="kw">set_bounds</span>(x[i, i], <span class="dt">ub =</span> <span class="dv">0</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co"># leave each city</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(x[i, j], <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co"># the model is undirected</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">model<span class="op">$</span><span class="kw">add_constraint</span>(x[i, j] <span class="op">==</span><span class="st"> </span>x[j, i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
 <a class="sourceLine" id="cb8-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co"># visit each city</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co"># ensure no subtours (arc constraints)</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23">model<span class="op">$</span><span class="kw">add_constraint</span>(u[i] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">i =</span> <span class="dv">2</span><span class="op">:</span>n)</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24">model<span class="op">$</span><span class="kw">add_constraint</span>(u[i] <span class="op">-</span><span class="st"> </span>u[j] <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">&lt;=</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>x[i, j]), <span class="dt">i =</span> <span class="dv">2</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">2</span><span class="op">:</span>n)</a>
-<a class="sourceLine" id="cb8-25" data-line-number="25">model</a></code></pre></div>
-<pre><code>## MIP Model: 
-##   Variables: 110
-##   Constraints: 110</code></pre>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co"># if you enter a node you have to leave it as well twice</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(x[i, j], <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n) <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n)</a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">model</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; MIP Model: </span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;   Variables: 676</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;   Constraints: 702</span></a></code></pre></div>
+</div>
+<div id="callback" class="section level2">
+<h2 class="hasAnchor">
+<a href="#callback" class="anchor"></a>Callback</h2>
+<p>The callback is invoked whenever there is a new lower bound found in a search node. We first check if all variables are integral. If that is the case then we use the <code>igraph</code> package to check if the shortest circle does not contain all cities. If that is also true we add the sub-tour elimination constraint.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">row_count &lt;-<span class="st"> </span>0L <span class="co">#let's count the number of rows we add</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">solver<span class="op">$</span><span class="kw">set_irowgen_callback</span>(<span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="co"># first we construct an adjacency matrix</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="co"># we also stop if we find fractional values</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  adjacency_matrix &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(0L, <span class="dt">nrow =</span> n, <span class="dt">ncol =</span> n)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">  all_integral &lt;-<span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">      adjacency_matrix[i, j] &lt;-<span class="st"> </span>solver<span class="op">$</span><span class="kw">glpk_get_col_prim</span>(x[i, j])</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">      <span class="cf">if</span> (adjacency_matrix[i, j] <span class="op">%%</span><span class="st"> </span><span class="dv">1</span> <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">        all_integral &lt;-<span class="st"> </span><span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">        <span class="cf">break</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">      }</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">    }</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">    <span class="cf">if</span> (<span class="op">!</span>all_integral) {</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">      <span class="cf">break</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">    }</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">  }</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">  </a>
+<a class="sourceLine" id="cb9-20" data-line-number="20">  <span class="cf">if</span> (<span class="op">!</span>all_integral) {</a>
+<a class="sourceLine" id="cb9-21" data-line-number="21">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>()</a>
+<a class="sourceLine" id="cb9-22" data-line-number="22">  }</a>
+<a class="sourceLine" id="cb9-23" data-line-number="23">  </a>
+<a class="sourceLine" id="cb9-24" data-line-number="24">  <span class="co"># find the shortest circle and check if that tour does not contain all the nodes</span></a>
+<a class="sourceLine" id="cb9-25" data-line-number="25">  <span class="co"># if yes, we add a subtour elimination constraint</span></a>
+<a class="sourceLine" id="cb9-26" data-line-number="26">  graph &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span>(adjacency_matrix, <span class="dt">mode =</span> <span class="st">"undirected"</span>)</a>
+<a class="sourceLine" id="cb9-27" data-line-number="27">  shortest_circle &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/igraph/man/girth.html">girth</a></span>(graph, <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-28" data-line-number="28">  circle_size &lt;-<span class="st"> </span>shortest_circle<span class="op">$</span>girth</a>
+<a class="sourceLine" id="cb9-29" data-line-number="29">  <span class="cf">if</span> (circle_size <span class="op">&lt;</span><span class="st"> </span>n <span class="op">&amp;&amp;</span><span class="st"> </span>circle_size <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb9-30" data-line-number="30">    first_v &lt;-<span class="st"> </span>shortest_circle<span class="op">$</span>circle[[1L]]</a>
+<a class="sourceLine" id="cb9-31" data-line-number="31">    prev_v &lt;-<span class="st"> </span>first_v</a>
+<a class="sourceLine" id="cb9-32" data-line-number="32">    expr &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb9-33" data-line-number="33">    <span class="cf">for</span> (v <span class="cf">in</span> shortest_circle<span class="op">$</span>circle[<span class="dv">2</span><span class="op">:</span>circle_size]) {</a>
+<a class="sourceLine" id="cb9-34" data-line-number="34">      expr &lt;-<span class="st"> </span>expr <span class="op">+</span><span class="st"> </span>x[prev_v, v]</a>
+<a class="sourceLine" id="cb9-35" data-line-number="35">      prev_v &lt;-<span class="st"> </span>v</a>
+<a class="sourceLine" id="cb9-36" data-line-number="36">    }</a>
+<a class="sourceLine" id="cb9-37" data-line-number="37">    expr &lt;-<span class="st"> </span>expr <span class="op">+</span><span class="st"> </span>x[prev_v, first_v]</a>
+<a class="sourceLine" id="cb9-38" data-line-number="38">    model<span class="op">$</span><span class="kw">add_constraint</span>(expr <span class="op">&lt;=</span><span class="st"> </span>circle_size <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-39" data-line-number="39">    row_count &lt;&lt;-<span class="st"> </span>row_count <span class="op">+</span><span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb9-40" data-line-number="40">  }</a>
+<a class="sourceLine" id="cb9-41" data-line-number="41">})</a></code></pre></div>
 </div>
 <div id="results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#results" class="anchor"></a>Results</h2>
-<p>This model can now be solved by one of the many solver libraries. Here we will use GLPK.</p>
+<p>This model can now be solved by one of the many solver libraries.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">model<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>()</a></code></pre></div>
+<p>We added 163 rows during the search process.</p>
 <p>To extract the solution we can use <code>get_variable_value</code> method that will return a data.frame which we can further be used with <code>tidyverse</code> packages.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">solution &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">get_variable_value</span>(x[i, j]) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(value <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) </a>
@@ -189,20 +230,20 @@
 <tbody>
 <tr class="odd">
 <td align="left">x</td>
-<td align="right">1</td>
-<td align="right">2</td>
+<td align="right">14</td>
+<td align="right">25</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">x</td>
-<td align="right">10</td>
-<td align="right">6</td>
+<td align="right">21</td>
+<td align="right">13</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">x</td>
-<td align="right">7</td>
-<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">2</td>
 <td align="right">1</td>
 </tr>
 </tbody>
@@ -227,30 +268,30 @@
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">from</td>
-<td align="right">1</td>
-<td align="right">398.89216</td>
-<td align="right">398.9946</td>
+<td align="right">14</td>
+<td align="right">127.71441</td>
+<td align="right">305.8893</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">to</td>
-<td align="right">2</td>
-<td align="right">376.78255</td>
-<td align="right">296.8970</td>
+<td align="right">25</td>
+<td align="right">41.21878</td>
+<td align="right">166.7136</td>
 </tr>
 <tr class="odd">
 <td align="right">2</td>
 <td align="left">from</td>
-<td align="right">10</td>
-<td align="right">83.78474</td>
-<td align="right">388.6032</td>
+<td align="right">21</td>
+<td align="right">452.01569</td>
+<td align="right">443.8775</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
 <td align="left">to</td>
-<td align="right">6</td>
-<td align="right">99.17237</td>
-<td align="right">447.9782</td>
+<td align="right">13</td>
+<td align="right">467.33612</td>
+<td align="right">453.3007</td>
 </tr>
 </tbody>
 </table>
@@ -259,7 +300,7 @@
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="dt">data =</span> paths, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">group =</span> trip_id)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Optimal route with cost: "</span>, <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(model<span class="op">$</span><span class="kw">objective_value</span>(), <span class="dv">2</span>)))</a></code></pre></div>
-<p><img src="problem-tsp_files/figure-html/unnamed-chunk-12-1.png" width="700" style="display: block; margin: auto;"></p>
+<p><img src="tsp-subtour_files/figure-html/unnamed-chunk-14-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="feedback" class="section level2">
 <h2 class="hasAnchor">
@@ -277,6 +318,7 @@
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#setting">Setting</a></li>
       <li><a href="#model-formulation">Model formulation</a></li>
+      <li><a href="#callback">Callback</a></li>
       <li><a href="#results">Results</a></li>
       <li><a href="#feedback">Feedback</a></li>
       </ul>
