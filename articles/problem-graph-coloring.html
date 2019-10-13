@@ -150,7 +150,7 @@
 <a class="sourceLine" id="cb10-6" data-line-number="6">model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/MIPModel.html">MIPModel</a></span>(<span class="kw"><a href="../reference/ROI_solver.html">ROI_solver</a></span>(<span class="st">"glpk"</span>, <span class="dt">control =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">presolve =</span> <span class="ot">TRUE</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)))</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">  </a>
 <a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co"># 1 iff node i has color k</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">model<span class="op">$</span><span class="kw">add_variable</span>(x[i, k], <span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span>max_colors)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">model<span class="op">$</span><span class="kw">add_variable</span>(x[i, k], <span class="dt">type =</span> <span class="st">"integer"</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span>max_colors, <span class="dt">lb =</span> <span class="dv">0</span>, <span class="dt">ub =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb10-10" data-line-number="10">  </a>
 <a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co"># 1 iff color k is used</span></a>
 <a class="sourceLine" id="cb10-12" data-line-number="12">model<span class="op">$</span><span class="kw">add_variable</span>(y[k], <span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span>max_colors)</a>
@@ -176,14 +176,14 @@
 <a class="sourceLine" id="cb10-32" data-line-number="32"></a>
 <a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co"># we could also set some states to specific colors and see if</span></a>
 <a class="sourceLine" id="cb10-34" data-line-number="34"><span class="co"># that still produces a valid coloring.</span></a>
-<a class="sourceLine" id="cb10-35" data-line-number="35">model<span class="op">$</span><span class="kw">add_constraint</span>(x[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-36" data-line-number="36">model<span class="op">$</span><span class="kw">add_constraint</span>(x[<span class="dv">2</span>, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-37" data-line-number="37">model<span class="op">$</span><span class="kw">add_constraint</span>(x[<span class="dv">3</span>, <span class="dv">3</span>] <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-38" data-line-number="38">model<span class="op">$</span><span class="kw">add_constraint</span>(x[<span class="dv">4</span>, <span class="dv">4</span>] <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb10-35" data-line-number="35">model<span class="op">$</span><span class="kw">set_bounds</span>(x[<span class="dv">1</span>, <span class="dv">1</span>], <span class="dt">lb =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-36" data-line-number="36">model<span class="op">$</span><span class="kw">set_bounds</span>(x[<span class="dv">2</span>, <span class="dv">2</span>], <span class="dt">lb =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-37" data-line-number="37">model<span class="op">$</span><span class="kw">set_bounds</span>(x[<span class="dv">3</span>, <span class="dv">3</span>], <span class="dt">lb =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-38" data-line-number="38">model<span class="op">$</span><span class="kw">set_bounds</span>(x[<span class="dv">4</span>, <span class="dv">4</span>], <span class="dt">lb =</span> <span class="dv">1</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">model</a></code></pre></div>
 <pre><code>## MIP Model: 
 ##   Variables: 208
-##   Constraints: 1139</code></pre>
+##   Constraints: 1135</code></pre>
 </div>
 <div id="solve-it" class="section level2">
 <h2 class="hasAnchor">
@@ -191,7 +191,7 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">model<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>()</a></code></pre></div>
 <pre><code>## &lt;SOLVER MSG&gt;  ----
 ## GLPK Simplex Optimizer, v4.57
-## 1139 rows, 208 columns, 2376 non-zeros
+## 1135 rows, 208 columns, 2372 non-zeros
 ## Preprocessing...
 ## 766 rows, 175 columns, 1615 non-zeros
 ## Scaling...
@@ -203,8 +203,8 @@
 ##      73: obj =   1.000000000e+01 inf =   0.000e+00 (0)
 ## OPTIMAL LP SOLUTION FOUND
 ## GLPK Integer Optimizer, v4.57
-## 1139 rows, 208 columns, 2376 non-zeros
-## 208 integer variables, all of which are binary
+## 1135 rows, 208 columns, 2372 non-zeros
+## 208 integer variables, 204 of which are binary
 ## Preprocessing...
 ## 766 rows, 176 columns, 1616 non-zeros
 ## 176 integer variables, all of which are binary
