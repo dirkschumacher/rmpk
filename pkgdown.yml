@@ -3,6 +3,7 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   problem-course-assignment: problem-course-assignment.html
+  problem-graph-coloring: problem-graph-coloring.html
   problem-markowitz: problem-markowitz.html
   problem-sudoku: problem-sudoku.html
   problem-tsp: problem-tsp.html
