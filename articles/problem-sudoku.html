@@ -119,7 +119,7 @@
 <a class="sourceLine" id="cb1-5" data-line-number="5">model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/MIPModel.html">MIPModel</a></span>(<span class="kw"><a href="../reference/ROI_solver.html">ROI_solver</a></span>(<span class="st">"glpk"</span>))</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">  </a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="co"># The number k stored in position i,j</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">model<span class="op">$</span><span class="kw">add_variable</span>(x[i, j, k], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">type =</span> <span class="st">"binary"</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">x &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(x[i, j, k], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">type =</span> <span class="st">"binary"</span>)</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9">  </a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="co"># no objective</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="dv">0</span>)</a>

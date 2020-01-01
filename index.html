@@ -123,7 +123,6 @@
 <li><p>✅ Integer, binary and continious variables</p></li>
 <li><p>✅ Linear and quadratic constraints/objective</p></li>
 <li><p>✅ Bindings to most popular solvers through <a href="https://CRAN.R-project.org/package=ROI">ROI</a></p></li>
-<li><p>✅ API that supports <code>magrittr</code> pipes</p></li>
 <li><p>✅ Support for character variable indexes</p></li>
 <li><p>✅ Access row/column duals of Linear Programs</p></li>
 <li><p>✅ Row generation through solver callbacks (e.g. for models with exponential many constraints)</p></li>
@@ -143,7 +142,7 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5">v &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">w &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">model &lt;-<span class="st"> </span><span class="kw"><a href="reference/MIPModel.html">MIPModel</a></span>(solver)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">model<span class="op">$</span><span class="kw">add_variable</span>(x[i], <span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">x &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(x[i], <span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="kw"><a href="reference/sum_expr.html">sum_expr</a></span>(v[i] <span class="op">*</span><span class="st"> </span>x[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dt">sense =</span> <span class="st">"max"</span>)</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="reference/sum_expr.html">sum_expr</a></span>(w[i] <span class="op">*</span><span class="st"> </span>x[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">model<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>()</a>
