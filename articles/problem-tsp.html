@@ -147,11 +147,11 @@
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/MIPModel.html">MIPModel</a></span>(<span class="kw"><a href="../reference/ROI_solver.html">ROI_solver</a></span>(<span class="st">"glpk"</span>))</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># we create a variable that is 1 iff we travel from city i to j</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">x &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n, </a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">x &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n,</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">             <span class="dt">type =</span> <span class="st">"integer"</span>, <span class="dt">lb =</span> <span class="dv">0</span>, <span class="dt">ub =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># a helper variable for the MTZ formulation of the tsp</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">u &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(u[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">lb =</span> <span class="dv">1</span>, <span class="dt">ub =</span> n)</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">u &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">lb =</span> <span class="dv">1</span>, <span class="dt">ub =</span> n)</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># minimize travel distance</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="kw"><a href="../reference/sum_expr.html">sum_expr</a></span>(distance[i, j] <span class="op">*</span><span class="st"> </span>x[i, j], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span>n), <span class="st">"min"</span>)</a>
@@ -192,20 +192,20 @@
 <tbody>
 <tr class="odd">
 <td align="left">x</td>
-<td align="right">1</td>
-<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">3</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">x</td>
-<td align="right">10</td>
-<td align="right">6</td>
+<td align="right">7</td>
+<td align="right">1</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">x</td>
-<td align="right">7</td>
-<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">9</td>
 <td align="right">1</td>
 </tr>
 </tbody>
@@ -230,30 +230,30 @@
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">from</td>
-<td align="right">1</td>
-<td align="right">398.89216</td>
-<td align="right">398.9946</td>
+<td align="right">5</td>
+<td align="right">180.6471</td>
+<td align="right">496.9183</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">to</td>
-<td align="right">2</td>
-<td align="right">376.78255</td>
-<td align="right">296.8970</td>
+<td align="right">3</td>
+<td align="right">195.6278</td>
+<td align="right">452.6550</td>
 </tr>
 <tr class="odd">
 <td align="right">2</td>
 <td align="left">from</td>
-<td align="right">10</td>
-<td align="right">83.78474</td>
-<td align="right">388.6032</td>
+<td align="right">7</td>
+<td align="right">267.4290</td>
+<td align="right">439.3217</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
 <td align="left">to</td>
-<td align="right">6</td>
-<td align="right">99.17237</td>
-<td align="right">447.9782</td>
+<td align="right">1</td>
+<td align="right">398.8922</td>
+<td align="right">398.9946</td>
 </tr>
 </tbody>
 </table>

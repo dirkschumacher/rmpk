@@ -142,22 +142,22 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5">v &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">w &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">model &lt;-<span class="st"> </span><span class="kw"><a href="reference/MIPModel.html">MIPModel</a></span>(solver)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">x &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(x[i], <span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">x &lt;-<span class="st"> </span>model<span class="op">$</span><span class="kw">add_variable</span>(<span class="dt">type =</span> <span class="st">"binary"</span>, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">model<span class="op">$</span><span class="kw">set_objective</span>(<span class="kw"><a href="reference/sum_expr.html">sum_expr</a></span>(v[i] <span class="op">*</span><span class="st"> </span>x[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dt">sense =</span> <span class="st">"max"</span>)</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">model<span class="op">$</span><span class="kw">add_constraint</span>(<span class="kw"><a href="reference/sum_expr.html">sum_expr</a></span>(w[i] <span class="op">*</span><span class="st"> </span>x[i], <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">model<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>()</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">model<span class="op">$</span><span class="kw">get_variable_value</span>(x[i])</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;    name  i value</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 1     x  9     1</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 2     x  3     1</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 3     x  2     0</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 1     x  1     1</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 2     x  7     1</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 3     x  5     1</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 4     x  8     0</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; 5     x 10     0</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; 6     x  6     0</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; 7     x  5     1</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; 8     x  1     1</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 9     x  4     1</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 10    x  7     1</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; 5     x  2     0</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; 6     x 10     0</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; 7     x  9     1</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; 8     x  3     1</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 9     x  6     0</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 10    x  4     1</span></a></code></pre></div>
 </div>
 <div id="there-might-be-an-api-that-supports-pipes" class="section level2">
 <h2 class="hasAnchor">
