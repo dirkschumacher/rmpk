@@ -139,18 +139,153 @@
     <p>You can also use any other data structure that implements the same methods.</p>
     </div>
 
-    <pre class="usage"><span class='no'>RMPSolverInterface</span></pre>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
-    <p>An object of class <code>R6ClassGenerator</code> of length 25.</p>
+    
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-add_variable'><code>RMPSolverInterface$add_variable()</code></a></p></li>
+<li><p><a href='#method-add_linear_constraint'><code>RMPSolverInterface$add_linear_constraint()</code></a></p></li>
+<li><p><a href='#method-set_linear_objective'><code>RMPSolverInterface$set_linear_objective()</code></a></p></li>
+<li><p><a href='#method-add_quadratic_constraint'><code>RMPSolverInterface$add_quadratic_constraint()</code></a></p></li>
+<li><p><a href='#method-set_quadratic_objective'><code>RMPSolverInterface$set_quadratic_objective()</code></a></p></li>
+<li><p><a href='#method-set_variable_lb'><code>RMPSolverInterface$set_variable_lb()</code></a></p></li>
+<li><p><a href='#method-set_variable_ub'><code>RMPSolverInterface$set_variable_ub()</code></a></p></li>
+<li><p><a href='#method-nvars'><code>RMPSolverInterface$nvars()</code></a></p></li>
+<li><p><a href='#method-nconstraints'><code>RMPSolverInterface$nconstraints()</code></a></p></li>
+<li><p><a href='#method-optimize'><code>RMPSolverInterface$optimize()</code></a></p></li>
+<li><p><a href='#method-get_variable_value'><code>RMPSolverInterface$get_variable_value()</code></a></p></li>
+<li><p><a href='#method-get_variable_dual'><code>RMPSolverInterface$get_variable_dual()</code></a></p></li>
+<li><p><a href='#method-get_row_dual'><code>RMPSolverInterface$get_row_dual()</code></a></p></li>
+<li><p><a href='#method-set_variable_value'><code>RMPSolverInterface$set_variable_value()</code></a></p></li>
+<li><p><a href='#method-get_objective_value'><code>RMPSolverInterface$get_objective_value()</code></a></p></li>
+<li><p><a href='#method-get_termination_status'><code>RMPSolverInterface$get_termination_status()</code></a></p></li>
+<li><p><a href='#method-get_termination_message'><code>RMPSolverInterface$get_termination_message()</code></a></p></li>
+<li><p><a href='#method-clone'><code>RMPSolverInterface$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-add_variable"></a></p><h3>Method <code>add_variable()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$add_variable(type, lower_bound = -Inf, upper_bound = Inf)</pre><p></div></p>
+
+<p><hr>
+<a id="method-add_linear_constraint"></a></p><h3>Method <code>add_linear_constraint()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$add_linear_constraint(linear_expr, type, rhs)</pre><p></div></p>
+
+<p><hr>
+<a id="method-set_linear_objective"></a></p><h3>Method <code>set_linear_objective()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$set_linear_objective(linear_expr, sense)</pre><p></div></p>
+
+<p><hr>
+<a id="method-add_quadratic_constraint"></a></p><h3>Method <code>add_quadratic_constraint()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$add_quadratic_constraint(quadratic_expr, type, rhs)</pre><p></div></p>
+
+<p><hr>
+<a id="method-set_quadratic_objective"></a></p><h3>Method <code>set_quadratic_objective()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$set_quadratic_objective(quadratic_expr, sense)</pre><p></div></p>
+
+<p><hr>
+<a id="method-set_variable_lb"></a></p><h3>Method <code>set_variable_lb()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$set_variable_lb(variable_index, value)</pre><p></div></p>
+
+<p><hr>
+<a id="method-set_variable_ub"></a></p><h3>Method <code>set_variable_ub()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$set_variable_ub(variable_index, value)</pre><p></div></p>
+
+<p><hr>
+<a id="method-nvars"></a></p><h3>Method <code>nvars()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$nvars()</pre><p></div></p>
+
+<p><hr>
+<a id="method-nconstraints"></a></p><h3>Method <code>nconstraints()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$nconstraints()</pre><p></div></p>
+
+<p><hr>
+<a id="method-optimize"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/optimize.html'>optimize()</a></code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$optimize()</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_variable_value"></a></p><h3>Method <code>get_variable_value()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$get_variable_value(var_index)</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_variable_dual"></a></p><h3>Method <code>get_variable_dual()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$get_variable_dual(var_index)</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_row_dual"></a></p><h3>Method <code>get_row_dual()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$get_row_dual(row_index)</pre><p></div></p>
+
+<p><hr>
+<a id="method-set_variable_value"></a></p><h3>Method <code>set_variable_value()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$set_variable_value(var_index, value)</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_objective_value"></a></p><h3>Method <code>get_objective_value()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$get_objective_value()</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_termination_status"></a></p><h3>Method <code>get_termination_status()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$get_termination_status()</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_termination_message"></a></p><h3>Method <code>get_termination_message()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$get_termination_message()</pre><p></div></p>
+
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre>RMPSolverInterface$clone(deep = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#format">Format</a></li>
+      <li><a href="#methods">Methods</a></li>
     </ul>
 
   </div>
